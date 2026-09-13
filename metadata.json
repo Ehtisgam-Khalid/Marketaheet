@@ -1,0 +1,6 @@
+{
+  "name": "BIEK Karachi Marks Sheet Generator",
+  "description": "Generate, edit, and print official Board of Intermediate Education Karachi Statement of Marks documents with photo upload and auto-calculated marks.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
