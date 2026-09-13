@@ -148,7 +148,7 @@ export const MarksSheetDocument: React.FC<MarksSheetDocumentProps> = ({
 
             {/* Right Column: Candidate Photo Frame */}
             <div className="flex-shrink-0 flex flex-col items-center">
-              <div className="w-[102px] h-[126px] border-2 border-black p-0.5 bg-white shadow-xs overflow-hidden flex items-center justify-center">
+              <div className="w-[102px] h-[126px] overflow-hidden flex items-center justify-center">
                 {data.candidatePhoto ? (
                   <img
                     src={data.candidatePhoto}
