@@ -3,6 +3,7 @@ import { MarksSheetData } from './types';
 import { DEFAULT_MARKS_SHEET } from './data/defaultData';
 import { MarksSheetDocument } from './components/MarksSheetDocument';
 import { EditorForm } from './components/EditorForm';
+import { downloadMarksheetPDF } from './utils/downloadPdf';
 import {
   Printer,
   RotateCcw,
@@ -14,6 +15,7 @@ import {
   Edit3,
   Download,
   Info,
+  Loader2,
 } from 'lucide-react';
 
 export default function App() {
@@ -33,6 +35,7 @@ export default function App() {
   const [viewMode, setViewMode] = useState<'split' | 'edit' | 'preview'>('split');
   const [zoomScale, setZoomScale] = useState<number>(0.92);
   const [showInfoBanner, setShowInfoBanner] = useState(true);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   // Sync to local storage
   useEffect(() => {
@@ -61,6 +64,19 @@ export default function App() {
 
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleDownloadPdf = async () => {
+    setIsDownloading(true);
+    try {
+      const fileName = `BIEK_Marksheet_${data.rollNo || '33762'}.pdf`;
+      await downloadMarksheetPDF('printable-marksheet', fileName);
+    } catch (e) {
+      console.error(e);
+      window.print();
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const handleReset = () => {
@@ -152,14 +168,31 @@ export default function App() {
               <span className="hidden md:inline">Reset Data</span>
             </button>
 
+            {/* Download 1-Page PDF CTA */}
+            <button
+              id="btn-download-pdf"
+              onClick={handleDownloadPdf}
+              disabled={isDownloading}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-teal-600 hover:bg-teal-500 active:bg-teal-700 text-white font-bold transition shadow-md cursor-pointer text-sm disabled:opacity-50"
+              title="Download clean 1-page PDF without borders or headers"
+            >
+              {isDownloading ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Download className="w-4 h-4" />
+              )}
+              <span>{isDownloading ? 'Generating PDF...' : 'Download PDF (1 Page)'}</span>
+            </button>
+
             {/* Print CTA */}
             <button
               id="btn-print-header"
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white font-bold transition shadow-md cursor-pointer text-sm"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 active:bg-slate-900 border border-slate-700 text-white font-bold transition shadow-xs cursor-pointer text-sm"
+              title="Print directly or save through browser print dialog"
             >
               <Printer className="w-4 h-4" />
-              Print / Save PDF
+              <span>Print Dialog</span>
             </button>
           </div>
         </div>
@@ -209,6 +242,8 @@ export default function App() {
                     data={data}
                     onChange={setData}
                     onPrint={handlePrint}
+                    onDownloadPdf={handleDownloadPdf}
+                    isDownloading={isDownloading}
                   />
                 </div>
               </div>
@@ -232,8 +267,22 @@ export default function App() {
                     </span>
                   </div>
 
-                  {/* Zoom Controls */}
+                  {/* Zoom Controls & Quick Download */}
                   <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={handleDownloadPdf}
+                      disabled={isDownloading}
+                      className="flex items-center gap-1 px-2.5 py-1 rounded bg-teal-600 hover:bg-teal-500 text-white font-medium cursor-pointer mr-2 disabled:opacity-50"
+                      title="Download 1-Page PDF directly"
+                    >
+                      {isDownloading ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <Download className="w-3.5 h-3.5" />
+                      )}
+                      <span>{isDownloading ? 'Saving...' : 'Download PDF'}</span>
+                    </button>
+
                     <button
                       onClick={() => setZoomScale((prev) => Math.max(0.4, Number((prev - 0.1).toFixed(2))))}
                       className="p-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 cursor-pointer"

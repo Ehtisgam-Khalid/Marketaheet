@@ -12,43 +12,73 @@
 @media print {
   @page {
     size: A4 portrait;
-    margin: 4mm 6mm;
+    margin: 0;
+  }
+
+  *, *::before, *::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
   }
 
   html, body {
     background: #ffffff !important;
+    background-color: #ffffff !important;
     color: #000000 !important;
     margin: 0 !important;
     padding: 0 !important;
-    width: 100% !important;
-    height: auto !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
+    overflow: hidden !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  .no-print {
+  /* Hide UI elements and dark app wrappers */
+  .no-print, header, footer {
     display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    overflow: visible !important;
   }
 
   .print-only-sheet {
     display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
     margin: 0 !important;
-    padding: 2mm 4mm !important;
+    padding: 0 !important;
     box-shadow: none !important;
     border: none !important;
-    transform: none !important;
-  }
-
-  /* Prevent page breaks inside the marksheet */
-  #printable-marksheet {
+    outline: none !important;
+    background: #ffffff !important;
+    overflow: hidden !important;
+    page-break-after: avoid !important;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
-    width: 100% !important;
+  }
+
+  /* Prevent page breaks inside the marksheet and ensure exact 1-page fit */
+  #printable-marksheet {
+    page-break-inside: avoid !important;
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
+    break-inside: avoid !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
+    min-height: 297mm !important;
     box-shadow: none !important;
     border: none !important;
+    outline: none !important;
     margin: 0 !important;
-    transform: none !important;
+    padding: 8mm 10mm 8mm 10mm !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
   }
 }

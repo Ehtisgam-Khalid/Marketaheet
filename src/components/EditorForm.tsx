@@ -19,12 +19,16 @@ interface EditorFormProps {
   data: MarksSheetData;
   onChange: (data: MarksSheetData) => void;
   onPrint: () => void;
+  onDownloadPdf?: () => void;
+  isDownloading?: boolean;
 }
 
 export const EditorForm: React.FC<EditorFormProps> = ({
   data,
   onChange,
   onPrint,
+  onDownloadPdf,
+  isDownloading = false,
 }) => {
   const [activeTab, setActiveTab] = useState<'student' | 'subjects' | 'footer'>(
     'student'
@@ -288,14 +292,28 @@ export const EditorForm: React.FC<EditorFormProps> = ({
           </p>
         </div>
 
-        <button
-          id="btn-print-primary"
-          onClick={onPrint}
-          className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white rounded-lg font-semibold text-sm shadow-md transition cursor-pointer"
-        >
-          <span className="text-base leading-none">🖨️</span>
-          Print Marksheet (A4)
-        </button>
+        <div className="flex items-center gap-2">
+          {onDownloadPdf && (
+            <button
+              id="btn-download-pdf-primary"
+              onClick={onDownloadPdf}
+              disabled={isDownloading}
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-teal-600 hover:bg-teal-500 active:bg-teal-700 text-white rounded-lg font-semibold text-sm shadow-md transition cursor-pointer disabled:opacity-50"
+            >
+              <span>📥</span>
+              {isDownloading ? 'Generating PDF...' : 'Download PDF (1 Page)'}
+            </button>
+          )}
+
+          <button
+            id="btn-print-primary"
+            onClick={onPrint}
+            className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-900 border border-slate-700 text-white rounded-lg font-semibold text-sm transition cursor-pointer"
+          >
+            <span>🖨️</span>
+            Print Dialog
+          </button>
+        </div>
       </div>
 
       {/* Quick Group Presets */}

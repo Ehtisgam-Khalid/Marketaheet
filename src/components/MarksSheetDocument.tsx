@@ -24,7 +24,7 @@ export const MarksSheetDocument: React.FC<MarksSheetDocumentProps> = ({
       style={{
         width: '210mm',
         minHeight: '297mm',
-        padding: '10mm 12mm 12mm 12mm',
+        padding: '8mm 12mm 8mm 12mm',
         boxSizing: 'border-box',
         transform: scale !== 1 ? `scale(${scale})` : undefined,
         transformOrigin: 'top center',
@@ -48,7 +48,7 @@ export const MarksSheetDocument: React.FC<MarksSheetDocumentProps> = ({
       )}
 
       {/* Sheet Content Wrapper */}
-      <div className="relative z-10 flex flex-col justify-between h-full min-h-[273mm]">
+      <div className="relative z-10 flex flex-col justify-between h-full min-h-[278mm]">
         {/* TOP SECTION */}
         <div>
           {/* Header Section: Serial Number & Centered Official Logo */}
