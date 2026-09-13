@@ -51,28 +51,25 @@ export const MarksSheetDocument: React.FC<MarksSheetDocumentProps> = ({
       <div className="relative z-10 flex flex-col justify-between h-full min-h-[273mm]">
         {/* TOP SECTION */}
         <div>
-          {/* Serial Number & Logo Header */}
-          <div className="flex items-start justify-between relative mb-1">
-            {/* Serial Number */}
-            <div className="pt-2">
+          {/* Header Section: Serial Number & Centered Official Logo */}
+          <div className="relative mb-2">
+            {/* Serial Number on the top left */}
+            <div className="absolute left-0 top-1">
               <span className="font-mono text-xl md:text-2xl font-bold tracking-wider text-black">
                 {data.serialNo || 'A548012'}
               </span>
             </div>
 
-            {/* Official Logo Center */}
-            <div className="flex flex-col items-center justify-center absolute left-1/2 -translate-x-1/2 -top-2">
-              <BiekLogo size={88} />
+            {/* Official Logo centered in normal layout flow */}
+            <div className="flex flex-col items-center justify-center pt-0 pb-1">
+              <BiekLogo size={80} />
             </div>
-
-            {/* Empty space for balance */}
-            <div className="w-20"></div>
           </div>
 
           {/* Board Title & Examination Heading */}
-          <div className="text-center mt-3 mb-2">
+          <div className="text-center mb-2">
             <h1
-              className="text-[23px] font-black tracking-wide uppercase text-black font-serif"
+              className="text-[22px] md:text-[23px] font-black tracking-wide uppercase text-black font-serif leading-tight"
               style={{ fontFamily: "'Playfair Display', 'Cinzel', serif" }}
             >
               BOARD OF INTERMEDIATE EDUCATION KARACHI
